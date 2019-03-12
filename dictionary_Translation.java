@@ -3,9 +3,11 @@ package dictionary;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
-public class Translation {
+@SuppressWarnings("ALL")
+class Translation {
     private Scanner scIn = new Scanner (System.in);
     private Scanner scLine = new Scanner (System.in);
     private Map<String, String> engWords = new HashMap<> ( );
@@ -13,7 +15,7 @@ public class Translation {
     private File engFile;
     private File ruFile;
 
-    public Translation() {
+    Translation() {
         File dir = new File ("./files");
         dir.mkdir ( );
         engFile = new File (dir, "eng.txt");
@@ -81,11 +83,7 @@ public class Translation {
             }
             System.out.println ("Введите русское слово для получения перевода ");
             String ruInput = ruWords.get (scLine.nextLine ( ));
-            if (ruInput != null) {
-                System.out.println (ruInput);
-            } else {
-                System.out.println (" Такого слова ещё нет в словаре " );
-            }
+            System.out.println (Objects.requireNonNullElse (ruInput, " Такого слова ещё нет в словаре "));
         } catch (FileNotFoundException e) {
             e.printStackTrace ( );
         }
@@ -104,17 +102,13 @@ public class Translation {
             }
             System.out.println ("Type in an English word to get a Russian translation ");
             String engInput = engWords.get (scLine.nextLine ( ));
-            if (engInput != null) {
-                System.out.println (engInput);
-            } else {
-                System.out.println (" There is no such a word in the dictionary yet. " );
-            }
+            System.out.println (Objects.requireNonNullElse (engInput, " There is no such a word in the dictionary yet. "));
         } catch (FileNotFoundException e) {
             e.printStackTrace ( );
         }
     }
 
-    public void start() {
+    void start() {
         int userInput;
         do {
             showMainMenu ( );
